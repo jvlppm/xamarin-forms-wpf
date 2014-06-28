@@ -9,7 +9,7 @@ namespace Xamarin.Forms.Platform.WPF
     {
         internal static List<Func<object, Type>> RegisteredRenderers;
 
-        internal static IWPFRenderer Create(VisualElement element)
+        internal static IWPFRenderer Create(Element element)
         {
             if (!Forms.IsInitialized)
                 throw new InvalidOperationException("Xamarin.Forms not initialized");

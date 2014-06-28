@@ -11,7 +11,7 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
         StackDictionary<BindableProperty, Func<BindableProperty, bool>> Handlers = new StackDictionary<BindableProperty, Func<BindableProperty, bool>>();
         IDictionary<string, BindableProperty> HandledProperties = new Dictionary<string, BindableProperty>();
 
-        VisualElement IWPFRenderer.Model
+        Element IWPFRenderer.Model
         {
             set { Model = (TModel)value; }
             get { return Model; }
@@ -59,8 +59,10 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
 
         protected virtual void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            var property = HandledProperties[e.PropertyName];
-            Handlers[property].FirstOrDefault(handle => handle(property));
+
+            BindableProperty property;
+            if (HandledProperties.TryGetValue(e.PropertyName, out property))
+                Handlers[property].FirstOrDefault(handle => handle(property));
         }
     }
 }

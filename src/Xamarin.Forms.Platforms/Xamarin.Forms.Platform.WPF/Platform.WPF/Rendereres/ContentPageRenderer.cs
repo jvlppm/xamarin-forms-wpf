@@ -33,10 +33,12 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
 
         void model_ChildRemoved(object sender, ElementEventArgs e)
         {
+            Content.Content = null;
         }
 
         void model_ChildAdded(object sender, ElementEventArgs e)
         {
+            Content.Content = RendererFactory.Create(e.Element).Element;
         }
 
         protected override void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

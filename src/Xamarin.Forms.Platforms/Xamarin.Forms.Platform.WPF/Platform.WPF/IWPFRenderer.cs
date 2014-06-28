@@ -10,6 +10,6 @@ namespace Xamarin.Forms.Platform.WPF
     public interface IWPFRenderer
     {
         FrameworkElement Element { get; }
-        VisualElement Model { get; set; }
+        Element Model { get; set; }
     }
 }
