@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30324.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{E11FF89B-5035-4FBC-AA6D-2BE766A89B27}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XamlSample.WPF", "XamlSample.WPF", "{5C0BAE85-275E-4700-B7D1-7A8337FF1619}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlSample.WPF", "..\..\samples\XamlSample.WPF\XamlSample.WPF\XamlSample.WPF.csproj", "{3445E7A5-06C4-42BE-A250-7BDD5C219241}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlSample", "..\..\samples\XamlSample.WPF\XamlSample\XamlSample.csproj", "{783761DF-FD9F-4E2B-B106-250E0C8421F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Platform.WPF", "Xamarin.Forms.Platform.WPF\Xamarin.Forms.Platform.WPF.csproj", "{680ABBAE-5BAA-4E86-B3D6-55544344DB65}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B3E7A6CE-FF56-4CBC-BD36-B5A5D036564E}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{680ABBAE-5BAA-4E86-B3D6-55544344DB65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{680ABBAE-5BAA-4E86-B3D6-55544344DB65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{680ABBAE-5BAA-4E86-B3D6-55544344DB65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{680ABBAE-5BAA-4E86-B3D6-55544344DB65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{783761DF-FD9F-4E2B-B106-250E0C8421F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{783761DF-FD9F-4E2B-B106-250E0C8421F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{783761DF-FD9F-4E2B-B106-250E0C8421F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{783761DF-FD9F-4E2B-B106-250E0C8421F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3445E7A5-06C4-42BE-A250-7BDD5C219241}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3445E7A5-06C4-42BE-A250-7BDD5C219241}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3445E7A5-06C4-42BE-A250-7BDD5C219241}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3445E7A5-06C4-42BE-A250-7BDD5C219241}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5C0BAE85-275E-4700-B7D1-7A8337FF1619} = {E11FF89B-5035-4FBC-AA6D-2BE766A89B27}
+		{783761DF-FD9F-4E2B-B106-250E0C8421F4} = {5C0BAE85-275E-4700-B7D1-7A8337FF1619}
+		{3445E7A5-06C4-42BE-A250-7BDD5C219241} = {5C0BAE85-275E-4700-B7D1-7A8337FF1619}
+	EndGlobalSection
+EndGlobal
