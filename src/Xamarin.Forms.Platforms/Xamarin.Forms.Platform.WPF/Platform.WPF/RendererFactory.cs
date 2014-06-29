@@ -7,8 +7,6 @@ namespace Xamarin.Forms.Platform.WPF
 {
     public static class RendererFactory
     {
-        internal static List<Func<object, Type>> RegisteredRenderers;
-
         internal static IWPFRenderer Create(Element element)
         {
             if (!Forms.IsInitialized)
@@ -17,15 +15,18 @@ namespace Xamarin.Forms.Platform.WPF
             if (element == null)
                 throw new NotImplementedException();
 
-            Type rendererType = RegisteredRenderers.Select(f => f(element)).Where(r => r != null).LastOrDefault();
-            if (rendererType == null)
-                throw new NotImplementedException();
-
-            IWPFRenderer renderer = Activator.CreateInstance(rendererType) as IWPFRenderer;
+            var renderer = Registrar.Registered.GetHandler<IWPFRenderer>(element.GetType());
             if (renderer == null)
                 throw new NotImplementedException();
             renderer.Model = element;
             return renderer;
+        }
+
+        internal static void ScanForRenderers()
+        {
+            Registrar.RegisterAll(new []{
+                typeof(ExportRendererAttribute)
+            });
         }
     }
 }

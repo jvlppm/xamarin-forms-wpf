@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace Xamarin.Forms.Platform.WPF
 {
-    public interface IWPFRenderer
+    public interface IWPFRenderer: IRegisterable
     {
         FrameworkElement Element { get; }
         Element Model { get; set; }

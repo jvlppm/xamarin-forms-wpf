@@ -1,5 +1,15 @@
-﻿namespace Xamarin.Forms.Platform.WPF.Rendereres
+﻿using Xamarin.Forms;
+using Xamarin.Forms.Platform.WPF;
+using Xamarin.Forms.Platform.WPF.Rendereres;
+
+[assembly: ExportRenderer(typeof(View), typeof(ViewRenderer))]
+namespace Xamarin.Forms.Platform.WPF.Rendereres
 {
+    public class ViewRenderer : VisualElementRenderer<View, object>
+    {
+
+    }
+
     public class ViewRenderer<TModel, T> : VisualElementRenderer<TModel, T>
         where TModel : View
     {

@@ -2,10 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.WPF;
 
+[assembly: ExportRenderer(typeof(VisualElement), typeof(Xamarin.Forms.Platform.WPF.Rendereres.VisualElementRenderer))]
 namespace Xamarin.Forms.Platform.WPF.Rendereres
 {
-    public abstract class VisualElementRenderer<TModel, T> : UserControl, IWPFRenderer
+    public class VisualElementRenderer : VisualElementRenderer<VisualElement, object>
+    {
+    }
+
+    public class VisualElementRenderer<TModel, T> : UserControl, IWPFRenderer
         where TModel : VisualElement
     {
         StackDictionary<BindableProperty, Func<BindableProperty, bool>> Handlers = new StackDictionary<BindableProperty, Func<BindableProperty, bool>>();
