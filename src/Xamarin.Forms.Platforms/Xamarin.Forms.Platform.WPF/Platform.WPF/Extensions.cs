@@ -1,6 +1,7 @@
 ﻿using System;
 using WPFColor = System.Windows.Media.Color;
 using WPFSolidColorBrush = System.Windows.Media.SolidColorBrush;
+using WPFThickness = System.Windows.Thickness;
 
 namespace Xamarin.Forms.Platform.WPF
 {
@@ -11,6 +12,11 @@ namespace Xamarin.Forms.Platform.WPF
             window.Content = RendererFactory.Create(page);
             var titleBinding = new System.Windows.Data.Binding(Page.TitleProperty.PropertyName) { Source = page };
             window.SetBinding(System.Windows.Window.TitleProperty, titleBinding);
+        }
+
+        public static WPFThickness ToWPFThickness(this Thickness thickness)
+        {
+            return new WPFThickness(thickness.Left, thickness.Top, thickness.Right, thickness.Bottom);
         }
 
         public static WPFSolidColorBrush ToBrush(this Color color)

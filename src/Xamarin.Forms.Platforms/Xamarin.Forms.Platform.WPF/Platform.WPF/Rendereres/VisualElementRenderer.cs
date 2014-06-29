@@ -5,13 +5,9 @@ using System.Windows.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.WPF;
 
-[assembly: ExportRenderer(typeof(VisualElement), typeof(Xamarin.Forms.Platform.WPF.Rendereres.VisualElementRenderer))]
+[assembly: ExportRenderer(typeof(VisualElement), typeof(Xamarin.Forms.Platform.WPF.Rendereres.VisualElementRenderer<VisualElement, object>))]
 namespace Xamarin.Forms.Platform.WPF.Rendereres
 {
-    public class VisualElementRenderer : VisualElementRenderer<VisualElement, object>
-    {
-    }
-
     public class VisualElementRenderer<TModel, T> : UserControl, IWPFRenderer
         where TModel : VisualElement
     {

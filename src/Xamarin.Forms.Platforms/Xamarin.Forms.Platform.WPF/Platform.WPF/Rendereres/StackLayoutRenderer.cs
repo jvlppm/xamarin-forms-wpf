@@ -6,7 +6,6 @@ using Xamarin.Forms.Platform.WPF.Rendereres;
 [assembly: ExportRenderer(typeof(StackLayout), typeof(StackLayoutRenderer))]
 namespace Xamarin.Forms.Platform.WPF.Rendereres
 {
-    
     class StackLayoutRenderer : ViewRenderer<StackLayout, StackLayoutControl>
     {
         

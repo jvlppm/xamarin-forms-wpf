@@ -6,11 +6,10 @@ using Xamarin.Forms.Platform.WPF.Rendereres;
 [assembly: ExportRenderer(typeof(ContentPage), typeof(ContentPageRenderer))]
 namespace Xamarin.Forms.Platform.WPF.Rendereres
 {
-    public class ContentPageRenderer : VisualElementRenderer<ContentPage, UserControl>
+    public class ContentPageRenderer : PageRenderer<ContentPage>
     {
         public ContentPageRenderer()
         {
-            // Xamarin.Forms: it would be very usefull if ContentPage.View was a bindable property.
             Content = new UserControl();
         }
 
@@ -39,11 +38,6 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
         void model_ChildAdded(object sender, ElementEventArgs e)
         {
             Content.Content = RendererFactory.Create(e.Element).Element;
-        }
-
-        protected override void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            base.OnPropertyChanged(sender, e);
         }
     }
 }
