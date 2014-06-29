@@ -17,8 +17,9 @@ namespace WpfApplication1
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             Forms.Init();
-            var mainWin = new Window();
+            var mainWin = new Window { Width = 640, Height = 480 };
             mainWin.SetPage(PortableForms.App.GetMainPage());
+            mainWin.Title = "Xamarin.Forms.WPF";
             mainWin.Show();
         }
     }
