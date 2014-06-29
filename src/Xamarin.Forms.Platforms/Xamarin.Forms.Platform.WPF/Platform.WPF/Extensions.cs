@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Windows.Media;
+using WPFColor = System.Windows.Media.Color;
+using WPFSolidColorBrush = System.Windows.Media.SolidColorBrush;
 
 namespace Xamarin.Forms.Platform.WPF
 {
@@ -8,30 +9,42 @@ namespace Xamarin.Forms.Platform.WPF
         public static void SetPage(this System.Windows.Window window, Xamarin.Forms.Page page)
         {
             window.Content = RendererFactory.Create(page);
+            var titleBinding = new System.Windows.Data.Binding(Page.TitleProperty.PropertyName) { Source = page };
+            window.SetBinding(System.Windows.Window.TitleProperty, titleBinding);
         }
 
-        public static SolidColorBrush ToBrush(this Color color)
+        public static WPFSolidColorBrush ToBrush(this Color color)
         {
             if (color == default(Color))
                 return null;
-            return new SolidColorBrush(color.ToWPFColor());
+            return new WPFSolidColorBrush(color.ToWPFColor());
         }
 
-        public static System.Windows.Media.Color ToWPFColor(this Color color)
+        public static WPFColor ToWPFColor(this Color color)
         {
             if (color == default(Color))
-                return default(System.Windows.Media.Color);
+                return default(WPFColor);
 
-            return System.Windows.Media.Color.FromArgb(
+            return WPFColor.FromArgb(
                 (byte)(color.A * 255),
                 (byte)(color.R * 255),
                 (byte)(color.G * 255),
                 (byte)(color.B * 255));
         }
 
+        public static System.Windows.Controls.Orientation ToWPFOrientation(this StackOrientation orientation)
+        {
+            switch(orientation)
+            {
+                case StackOrientation.Horizontal: return System.Windows.Controls.Orientation.Horizontal;
+                case StackOrientation.Vertical: return System.Windows.Controls.Orientation.Vertical;
+            }
+            throw new NotImplementedException();
+        }
+
         public static System.Windows.TextAlignment ToWPFTextAlignment(this TextAlignment alignment)
         {
-            switch(alignment)
+            switch (alignment)
             {
                 case TextAlignment.Start: return System.Windows.TextAlignment.Left;
                 case TextAlignment.Center: return System.Windows.TextAlignment.Center;

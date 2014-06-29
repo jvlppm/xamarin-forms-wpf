@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Xamarin.Forms.Platform.WPF.Controls.StackLayoutControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:conv="clr-namespace:Xamarin.Forms.Platform.WPF.Converters"
+             mc:Ignorable="d" 
+             x:Name="root"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <conv:ModelToViewConverter x:Key="ModelToViewConverter"/>
+    </UserControl.Resources>
+    <ItemsControl x:Name="ItemsControl" ItemsSource="{Binding ItemsSource, ElementName=root}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <Grid Loaded="Grid_Loaded" />
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <UserControl Content="{Binding Converter={StaticResource ModelToViewConverter}}" />
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</UserControl>

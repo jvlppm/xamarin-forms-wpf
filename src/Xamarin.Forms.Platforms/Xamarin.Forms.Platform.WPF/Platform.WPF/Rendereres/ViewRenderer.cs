@@ -26,24 +26,20 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
 
         protected virtual bool Handle_VerticalOptionsProperty(BindableProperty property)
         {
-            // TODO: Understand LayoutOptions.Expands / Fill.
-
-            if (Model.VerticalOptions.Expands || Model.VerticalOptions.Alignment == LayoutAlignment.Fill)
-                Element.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
-            else
+            switch (Model.VerticalOptions.Alignment)
             {
-                switch (Model.VerticalOptions.Alignment)
-                {
-                    case LayoutAlignment.Start:
-                        Element.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-                        break;
-                    case LayoutAlignment.Center:
-                        Element.VerticalAlignment = System.Windows.VerticalAlignment.Center;
-                        break;
-                    case LayoutAlignment.End:
-                        Element.VerticalAlignment = System.Windows.VerticalAlignment.Bottom;
-                        break;
-                }
+                case LayoutAlignment.Start:
+                    Element.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+                    break;
+                case LayoutAlignment.Center:
+                    Element.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+                    break;
+                case LayoutAlignment.End:
+                    Element.VerticalAlignment = System.Windows.VerticalAlignment.Bottom;
+                    break;
+                case LayoutAlignment.Fill:
+                    Element.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+                    break;
             }
 
             return true;
@@ -51,22 +47,20 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
 
         protected virtual bool Handle_HorizontalOptionsProperty(BindableProperty property)
         {
-            if (Model.HorizontalOptions.Expands || Model.HorizontalOptions.Alignment == LayoutAlignment.Fill)
-                Element.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
-            else
+            switch (Model.HorizontalOptions.Alignment)
             {
-                switch (Model.HorizontalOptions.Alignment)
-                {
-                    case LayoutAlignment.Start:
-                        Element.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-                        break;
-                    case LayoutAlignment.Center:
-                        Element.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-                        break;
-                    case LayoutAlignment.End:
-                        Element.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-                        break;
-                }
+                case LayoutAlignment.Start:
+                    Element.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+                    break;
+                case LayoutAlignment.Center:
+                    Element.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                    break;
+                case LayoutAlignment.End:
+                    Element.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+                    break;
+                case LayoutAlignment.Fill:
+                    Element.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+                    break;
             }
 
             return true;

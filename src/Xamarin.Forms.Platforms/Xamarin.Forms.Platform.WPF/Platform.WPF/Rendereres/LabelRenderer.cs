@@ -7,11 +7,12 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
 {
     public class LabelRenderer : ViewRenderer<Label, System.Windows.Controls.TextBlock>
     {
+        System.Windows.Media.FontFamily DefaultFontFamily;
+
         public LabelRenderer()
         {
-            // TODO: Style based renderer, bindings and converters.
-
             Content = new System.Windows.Controls.TextBlock();
+            DefaultFontFamily = Content.FontFamily;
             HandleProperty(Label.TextProperty, Handle_TextProperty);
             HandleProperty(Label.FontProperty, Handle_FontProperty);
             HandleProperty(Label.TextColorProperty, Handle_ColorProperty);
@@ -31,7 +32,7 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
         {
             if (Model.Font != null)
             {
-                Content.FontFamily = new System.Windows.Media.FontFamily(Model.Font.FontName);
+                Content.FontFamily = Model.Font.FontName == null ? DefaultFontFamily : new System.Windows.Media.FontFamily(Model.Font.FontName);
                 Content.FontSize = Model.Font.FontSize;
                 Content.FontWeight = Model.Font.Bold ? System.Windows.FontWeights.Bold : System.Windows.FontWeights.Normal;
             }
