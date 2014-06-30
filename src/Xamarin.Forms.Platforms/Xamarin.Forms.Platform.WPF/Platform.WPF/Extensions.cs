@@ -80,5 +80,24 @@ namespace Xamarin.Forms.Platform.WPF
             }
             throw new NotImplementedException("TextAlignment." + alignment + " is not supported yet.");
         }
+
+        public static double GetWPFSize(this Font font)
+        {
+            if(font.NamedSize != null)
+            {
+                switch(font.NamedSize.Value)
+                {
+                    case NamedSize.Micro:
+                        return 10;
+                    case NamedSize.Small:
+                        return 12;
+                    case NamedSize.Medium:
+                        return 14;
+                    case NamedSize.Large:
+                        return 18;
+                }
+            }
+            return font.FontSize;
+        }
     }
 }

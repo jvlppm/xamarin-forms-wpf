@@ -84,6 +84,7 @@
     <Compile Include="Platform.WPF\Extensions.cs" />
     <Compile Include="Platform.WPF\IWPFRenderer.cs" />
     <Compile Include="Platform.WPF\PlatformServices.cs" />
+    <Compile Include="Platform.WPF\Rendereres\ButtonRenderer.cs" />
     <Compile Include="Platform.WPF\Rendereres\PageRenderer.cs" />
     <Compile Include="Platform.WPF\Rendereres\StackDictionary.cs" />
     <Compile Include="Platform.WPF\Rendereres\StackLayoutRenderer.cs" />
