@@ -8,11 +8,13 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
     public class LabelRenderer : ViewRenderer<Label, System.Windows.Controls.TextBlock>
     {
         System.Windows.Media.FontFamily DefaultFontFamily;
+        double DefaultFontSize;
 
         public LabelRenderer()
         {
             Content = new System.Windows.Controls.TextBlock();
             DefaultFontFamily = Content.FontFamily;
+            DefaultFontSize = Content.FontSize;
             HandleProperty(Label.TextProperty, Handle_TextProperty);
             HandleProperty(Label.FontProperty, Handle_FontProperty);
             HandleProperty(Label.TextColorProperty, Handle_ColorProperty);
@@ -30,12 +32,17 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
 
         protected virtual bool Handle_FontProperty(BindableProperty property)
         {
-            if (Model.Font != null)
+            if (Model.Font == null)
             {
-                Content.FontFamily = Model.Font.FontName == null ? DefaultFontFamily : new System.Windows.Media.FontFamily(Model.Font.FontName);
-                Content.FontSize = Model.Font.FontSize;
-                Content.FontWeight = Model.Font.Bold ? System.Windows.FontWeights.Bold : System.Windows.FontWeights.Normal;
+                Content.FontFamily = DefaultFontFamily;
+                Content.FontSize = DefaultFontSize;
+                Content.FontWeight = System.Windows.FontWeights.Normal;
+                return true;
             }
+
+            Content.FontFamily = Model.Font.FontName == null ? DefaultFontFamily : new System.Windows.Media.FontFamily(Model.Font.FontName);
+            Content.FontSize = Model.Font.GetWPFSize();
+            Content.FontWeight = Model.Font.Bold ? System.Windows.FontWeights.Bold : System.Windows.FontWeights.Normal;
             return true;
         }
 
