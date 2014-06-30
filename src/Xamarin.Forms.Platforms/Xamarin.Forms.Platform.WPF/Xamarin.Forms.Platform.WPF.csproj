@@ -69,16 +69,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Forms.cs" />
+    <Compile Include="Platform.WPF\Controls\EntryControl.xaml.cs">
+      <DependentUpon>EntryControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Platform.WPF\Controls\StackLayoutControl.xaml.cs">
       <DependentUpon>StackLayoutControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Platform.WPF\Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Platform.WPF\Converters\ColorToWPFBrushConverter.cs" />
     <Compile Include="Platform.WPF\Converters\LayoutOptionsToLengthConverter.cs" />
     <Compile Include="Platform.WPF\Converters\ModelToViewConverter.cs" />
+    <Compile Include="Platform.WPF\Converters\VisibilityNegationConverter.cs" />
     <Compile Include="Platform.WPF\ExportRenderer.cs" />
     <Compile Include="Platform.WPF\Extensions.cs" />
     <Compile Include="Platform.WPF\IWPFRenderer.cs" />
     <Compile Include="Platform.WPF\PlatformServices.cs" />
     <Compile Include="Platform.WPF\Rendereres\ButtonRenderer.cs" />
+    <Compile Include="Platform.WPF\Rendereres\EntryRenderer.cs" />
     <Compile Include="Platform.WPF\Rendereres\PageRenderer.cs" />
     <Compile Include="Platform.WPF\Rendereres\StackDictionary.cs" />
     <Compile Include="Platform.WPF\Rendereres\StackLayoutRenderer.cs" />
@@ -122,6 +129,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Platform.WPF\Controls\EntryControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Platform.WPF\Controls\StackLayoutControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

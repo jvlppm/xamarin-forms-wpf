@@ -2,19 +2,16 @@
 
 namespace Xamarin.Forms.Platform.WPF.Converters
 {
-    class LayoutOptionsToLengthConverter : System.Windows.Data.IValueConverter
+    class BooleanToVisibilityConverter : System.Windows.Data.IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var options = (LayoutOptions)value;
-            return new System.Windows.GridLength(1, options.Expands
-                        ? System.Windows.GridUnitType.Star
-                        : System.Windows.GridUnitType.Auto);
+            return value as bool? == true ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return value as System.Windows.Visibility? == System.Windows.Visibility.Visible;
         }
     }
 }

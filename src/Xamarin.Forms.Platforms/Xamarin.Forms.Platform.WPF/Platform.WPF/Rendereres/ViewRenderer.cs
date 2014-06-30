@@ -14,9 +14,6 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
 
             HandleProperty(View.HorizontalOptionsProperty, Handle_HorizontalOptionsProperty);
             HandleProperty(View.VerticalOptionsProperty, Handle_VerticalOptionsProperty);
-            HandleProperty(View.BackgroundColorProperty, Handle_BackgroundColorProperty);
-            HandleProperty(View.IsEnabledProperty, Handle_IsEnabledProperty);
-            HandleProperty(View.IsVisibleProperty, Handle_IsVisibleProperty);
         }
 
         protected virtual bool Handle_VerticalOptionsProperty(BindableProperty property)
@@ -58,25 +55,6 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
                     break;
             }
 
-            return true;
-        }
-
-        protected virtual bool Handle_BackgroundColorProperty(BindableProperty property)
-        {
-            Background = Model.BackgroundColor.ToBrush();
-            return true;
-        }
-
-        protected virtual bool Handle_IsEnabledProperty(BindableProperty property)
-        {
-            IsEnabled = Model.IsEnabled;
-            return true;
-        }
-
-        protected virtual bool Handle_IsVisibleProperty(BindableProperty property)
-        {
-            Visibility = Model.IsVisible ? System.Windows.Visibility.Visible
-                                         : System.Windows.Visibility.Hidden;
             return true;
         }
     }

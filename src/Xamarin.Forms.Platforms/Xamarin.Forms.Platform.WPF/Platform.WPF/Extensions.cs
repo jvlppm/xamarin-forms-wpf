@@ -19,7 +19,7 @@ namespace Xamarin.Forms.Platform.WPF
             return new WPFThickness(thickness.Left, thickness.Top, thickness.Right, thickness.Bottom);
         }
 
-        public static WPFSolidColorBrush ToBrush(this Color color)
+        public static WPFSolidColorBrush ToWPFBrush(this Color color)
         {
             if (color == default(Color))
                 return null;

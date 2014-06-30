@@ -39,6 +39,15 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
             set { base.Content = value; }
         }
 
+        public VisualElementRenderer()
+        {
+            HandleProperty(VisualElement.BackgroundColorProperty, Handle_BackgroundColorProperty);
+            HandleProperty(VisualElement.IsEnabledProperty, Handle_IsEnabledProperty);
+            HandleProperty(VisualElement.IsVisibleProperty, Handle_IsVisibleProperty);
+            HandleProperty(VisualElement.InputTransparentProperty, Handle_InputTransparentProperty);
+            HandleProperty(VisualElement.OpacityProperty, Handle_OpacityProperty);
+        }
+
         protected virtual void LoadModel(TModel model)
         {
             _model.PropertyChanged += OnPropertyChanged;
@@ -51,6 +60,7 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
             _model.PropertyChanged -= OnPropertyChanged;
         }
 
+        #region Property Handlers
         protected void HandleProperty(BindableProperty property, Func<BindableProperty, bool> handler)
         {
             if (!property.DeclaringType.IsAssignableFrom(typeof(TModel)))
@@ -62,10 +72,41 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
 
         protected virtual void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-
             BindableProperty property;
             if (HandledProperties.TryGetValue(e.PropertyName, out property))
                 Handlers[property].FirstOrDefault(handle => handle(property));
         }
+
+        protected virtual bool Handle_BackgroundColorProperty(BindableProperty property)
+        {
+            Background = Model.BackgroundColor.ToWPFBrush();
+            return true;
+        }
+
+        protected virtual bool Handle_IsEnabledProperty(BindableProperty property)
+        {
+            IsEnabled = Model.IsEnabled;
+            return true;
+        }
+
+        protected virtual bool Handle_IsVisibleProperty(BindableProperty property)
+        {
+            Visibility = Model.IsVisible ? System.Windows.Visibility.Visible
+                                         : System.Windows.Visibility.Hidden;
+            return true;
+        }
+
+        protected virtual bool Handle_InputTransparentProperty(BindableProperty property)
+        {
+            IsHitTestVisible = !Model.InputTransparent;
+            return true;
+        }
+
+        protected virtual bool Handle_OpacityProperty(BindableProperty property)
+        {
+            Opacity = Model.Opacity;
+            return true;
+        }
+        #endregion
     }
 }

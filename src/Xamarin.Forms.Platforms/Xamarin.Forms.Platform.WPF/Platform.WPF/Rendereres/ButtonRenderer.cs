@@ -61,13 +61,13 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
 
         bool Handle_BorderColor(BindableProperty property)
         {
-            Content.BorderBrush = Model.BorderColor.ToBrush() ?? DefaultBorderBrush;
+            Content.BorderBrush = Model.BorderColor.ToWPFBrush() ?? DefaultBorderBrush;
             return true;
         }
 
         private bool Handle_TextColorProperty(BindableProperty property)
         {
-            Content.Foreground = Model.TextColor.ToBrush() ?? DefaultFontBrush;
+            Content.Foreground = Model.TextColor.ToWPFBrush() ?? DefaultFontBrush;
             return true;
         }
 

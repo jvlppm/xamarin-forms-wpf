@@ -49,9 +49,9 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
         protected virtual bool Handle_ColorProperty(BindableProperty property)
         {
             if (property == Label.TextColorProperty && Model.TextColor != default(Color))
-                Content.Foreground = Model.TextColor.ToBrush();
+                Content.Foreground = Model.TextColor.ToWPFBrush();
             if (property == Label.BackgroundColorProperty && Model.BackgroundColor != default(Color))
-                Content.Background = Model.BackgroundColor.ToBrush();
+                Content.Background = Model.BackgroundColor.ToWPFBrush();
             return true;
         }
 
