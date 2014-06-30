@@ -22,7 +22,6 @@
                      Foreground="{Binding TextColor, Converter={StaticResource ColorToWPFBrushConverter}}"
                      Background="{Binding BackgroundColor, Converter={StaticResource ColorToWPFBrushConverter}}"/>
         <TextBlock Text="{Binding Placeholder}" Margin="3,1" IsHitTestVisible="False"
-                   Foreground="{Binding TextColor, Converter={StaticResource ColorToWPFBrushConverter}, FallbackValue=Black}"
                    Visibility="{Binding Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"
                    Opacity="0.6" IsEnabled="{Binding IsEnabled}">
             <TextBlock.Style>
