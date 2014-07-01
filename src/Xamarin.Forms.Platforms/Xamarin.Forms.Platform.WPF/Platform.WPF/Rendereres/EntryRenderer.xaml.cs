@@ -1,40 +1,37 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-
+﻿[assembly: Xamarin.Forms.Platform.WPF.ExportRenderer(typeof(Xamarin.Forms.Entry), typeof(Xamarin.Forms.Platform.WPF.Controls.EntryRenderer))]
 namespace Xamarin.Forms.Platform.WPF.Controls
 {
-    public partial class EntryControl : UserControl
+    using System.Windows;
+    using System.Windows.Controls;
+
+    public partial class EntryRenderer : Xamarin.Forms.Platform.WPF.Rendereres.ViewRenderer
     {
         bool ignoreTextChange;
 
-        #region Dependency Properties
-        public Entry Model
-        {
-            get { return (Entry)GetValue(ModelProperty); }
-            set { SetValue(ModelProperty, value); }
+        public new Entry Model
+        { 
+            get { return (Entry)base.Model; }
+            set { base.Model = value; }
         }
 
-        public static readonly DependencyProperty ModelProperty =
-            DependencyProperty.Register("Model", typeof(Entry), typeof(EntryControl), new PropertyMetadata(null, ModelChangedCallback));
-        #endregion
-
-        public EntryControl()
+        public EntryRenderer()
         {
             InitializeComponent();
         }
 
-        static void ModelChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        protected override void LoadModel(View model)
         {
-            EntryControl entryControl = (EntryControl)sender;
-
-            if(e.OldValue != null)
-                ((Entry)e.OldValue).TextChanged -= entryControl.EntryModel_TextChanged;
-
-            if (e.NewValue != null)
-                ((Entry)e.NewValue).TextChanged += entryControl.EntryModel_TextChanged;
+            ((Entry)model).TextChanged += EntryModel_TextChanged;
+            base.LoadModel(model);
         }
 
-        void EntryModel_TextChanged(object sender, TextChangedEventArgs e)
+        protected override void UnloadModel(View model)
+        {
+            ((Entry)model).TextChanged -= EntryModel_TextChanged;
+            base.UnloadModel(model);
+        }
+
+        void EntryModel_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             if (ignoreTextChange)
                 return;
@@ -45,7 +42,7 @@ namespace Xamarin.Forms.Platform.WPF.Controls
             ignoreTextChange = false;
         }
 
-        void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (ignoreTextChange)
                 return;
@@ -80,6 +77,12 @@ namespace Xamarin.Forms.Platform.WPF.Controls
                 Model.SendCompleted();
                 e.Handled = true;
             }
+        }
+
+        protected override bool Handle_BackgroundColorProperty(BindableProperty property)
+        {
+            // Background color is set directly to the TextBox/PasswordBox with bindings.
+            return true;
         }
     }
 }

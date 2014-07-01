@@ -69,8 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Forms.cs" />
-    <Compile Include="Platform.WPF\Controls\EntryControl.xaml.cs">
-      <DependentUpon>EntryControl.xaml</DependentUpon>
+    <Compile Include="Platform.WPF\Rendereres\EntryRenderer.xaml.cs">
+      <DependentUpon>EntryRenderer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Platform.WPF\Controls\StackLayoutControl.xaml.cs">
       <DependentUpon>StackLayoutControl.xaml</DependentUpon>
@@ -85,7 +85,6 @@
     <Compile Include="Platform.WPF\IWPFRenderer.cs" />
     <Compile Include="Platform.WPF\PlatformServices.cs" />
     <Compile Include="Platform.WPF\Rendereres\ButtonRenderer.cs" />
-    <Compile Include="Platform.WPF\Rendereres\EntryRenderer.cs" />
     <Compile Include="Platform.WPF\Rendereres\PageRenderer.cs" />
     <Compile Include="Platform.WPF\Rendereres\StackDictionary.cs" />
     <Compile Include="Platform.WPF\Rendereres\StackLayoutRenderer.cs" />
@@ -129,7 +128,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Platform.WPF\Controls\EntryControl.xaml">
+    <Page Include="Platform.WPF\Rendereres\EntryRenderer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -5,6 +5,8 @@ using Xamarin.Forms.Platform.WPF.Rendereres;
 [assembly: ExportRenderer(typeof(View), typeof(ViewRenderer<View, object>))]
 namespace Xamarin.Forms.Platform.WPF.Rendereres
 {
+    public class ViewRenderer : ViewRenderer<View, System.Windows.FrameworkElement> { }
+
     public class ViewRenderer<TModel, T> : VisualElementRenderer<TModel, T>
         where TModel : View
     {

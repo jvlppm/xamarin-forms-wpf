@@ -1,17 +1,18 @@
-﻿<UserControl x:Class="Xamarin.Forms.Platform.WPF.Controls.EntryControl"
+﻿<rend:ViewRenderer x:Class="Xamarin.Forms.Platform.WPF.Controls.EntryRenderer"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:conv="clr-namespace:Xamarin.Forms.Platform.WPF.Converters"
+             xmlns:rend="clr-namespace:Xamarin.Forms.Platform.WPF.Rendereres"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{Binding Model, RelativeSource={RelativeSource Self}}">
-    <UserControl.Resources>
+    <rend:ViewRenderer.Resources>
         <conv:VisibilityNegationConverter x:Key="VisibilityNegationConverter" />
         <conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <conv:ColorToWPFBrushConverter x:Key="ColorToWPFBrushConverter" />
-    </UserControl.Resources>
+    </rend:ViewRenderer.Resources>
     <Grid>
         <TextBox x:Name="TextBox" Visibility="{Binding Visibility, ElementName=PasswordBox, Converter={StaticResource VisibilityNegationConverter}}"
                  TextChanged="TextBox_TextChanged" LostFocus="Entry_LostFocus" PreviewKeyDown="Entry_PreviewKeyDown"
@@ -35,4 +36,4 @@
             </TextBlock.Style>
         </TextBlock>
     </Grid>
-</UserControl>
+</rend:ViewRenderer>

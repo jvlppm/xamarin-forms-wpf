@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.WPF;
 
-[assembly: ExportRenderer(typeof(VisualElement), typeof(Xamarin.Forms.Platform.WPF.Rendereres.VisualElementRenderer<VisualElement, object>))]
+[assembly: ExportRenderer(typeof(VisualElement), typeof(Xamarin.Forms.Platform.WPF.Rendereres.VisualElementRenderer))]
 namespace Xamarin.Forms.Platform.WPF.Rendereres
 {
+    public class VisualElementRenderer : VisualElementRenderer<VisualElement, System.Windows.FrameworkElement> { }
+
     public class VisualElementRenderer<TModel, T> : UserControl, IWPFRenderer
         where TModel : VisualElement
     {
@@ -20,18 +23,29 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
             get { return Model; }
         }
 
-        TModel _model;
         public TModel Model
         {
-            get { return _model; }
-            set
-            {
-                if (_model != null)
-                    UnloadModel(_model);
-                _model = value;
-                LoadModel(value);
-            }
+            get { return (TModel)GetValue(ModelProperty); }
+            set { SetValue(ModelProperty, value); }
         }
+
+        // Using a DependencyProperty as the backing store for Model.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ModelProperty =
+            DependencyProperty.Register("Model", typeof(TModel), typeof(VisualElementRenderer<TModel, T>), new PropertyMetadata(null, Model_ChangedCallback));
+
+        static void Model_ChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var rend = d as VisualElementRenderer<TModel, T>;
+
+            var oldModel = e.OldValue as TModel;
+            if(oldModel != null)
+                rend.UnloadModel(oldModel);
+
+            var newModel = e.NewValue as TModel;
+            if (newModel != null)
+                rend.LoadModel(newModel);
+        }
+
         public System.Windows.FrameworkElement Element { get { return this; } }
         public new T Content
         {
@@ -50,14 +64,14 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
 
         protected virtual void LoadModel(TModel model)
         {
-            _model.PropertyChanged += OnPropertyChanged;
+            model.PropertyChanged += OnPropertyChanged;
             foreach (var handler in Handlers)
                 handler.Value(handler.Key);
         }
 
         protected virtual void UnloadModel(TModel model)
         {
-            _model.PropertyChanged -= OnPropertyChanged;
+            model.PropertyChanged -= OnPropertyChanged;
         }
 
         #region Property Handlers
