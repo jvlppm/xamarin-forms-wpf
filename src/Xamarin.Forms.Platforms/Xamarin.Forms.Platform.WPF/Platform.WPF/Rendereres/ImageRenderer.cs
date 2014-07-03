@@ -65,7 +65,7 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
         {
             var fileSource = source as FileImageSource;
             if (fileSource != null)
-                return await Device.PlatformServices.GetStreamAsync(new System.Uri(fileSource.File), cancellation);
+                return await Device.PlatformServices.GetStreamAsync(new System.Uri(fileSource.File, UriKind.RelativeOrAbsolute), cancellation);
 
             var uriSource = source as UriImageSource;
             if (uriSource != null)

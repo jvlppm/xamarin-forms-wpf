@@ -66,9 +66,37 @@ namespace Xamarin.Forms.Platform.WPF
 
         public async Task<Stream> GetStreamAsync(Uri uri, CancellationToken cancellationToken)
         {
-            if (uri.IsFile)
-                return await Task.Factory.StartNew(() => File.OpenRead(uri.AbsolutePath), cancellationToken);
+            if (!uri.IsAbsoluteUri || (uri.IsAbsoluteUri && uri.Scheme == "pack"))
+            {
+                // Build Action: Content, Copy Local: True
+                try
+                {
+                    var contentInfo = Application.GetContentStream(uri);
+                    if (contentInfo != null)
+                        return contentInfo.Stream;
+                }
+                catch { }
 
+                // Build Action: Resource
+                try
+                {
+                    var resourceInfo = Application.GetResourceStream(uri);
+                    if (resourceInfo != null)
+                        return resourceInfo.Stream;
+                }
+                catch { }
+
+                // Local file OR pack://siteoforigin:,,,/SiteOfOriginFile.ext
+                try
+                {
+                    var remoteInfo = Application.GetRemoteStream(uri);
+                    if (remoteInfo != null)
+                        return remoteInfo.Stream;
+                }
+                catch { }
+            }
+
+            // Web file
             var response = await HttpClient.GetAsync(uri, cancellationToken);
             return await response.Content.ReadAsStreamAsync();
         }
