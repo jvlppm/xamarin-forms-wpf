@@ -1,10 +1,11 @@
-﻿using System;
-using WPFColor = System.Windows.Media.Color;
-using WPFSolidColorBrush = System.Windows.Media.SolidColorBrush;
-using WPFThickness = System.Windows.Thickness;
-
-namespace Xamarin.Forms.Platform.WPF
+﻿namespace Xamarin.Forms.Platform.WPF
 {
+    using System;
+    using WPFColor = System.Windows.Media.Color;
+    using WPFSolidColorBrush = System.Windows.Media.SolidColorBrush;
+    using WPFThickness = System.Windows.Thickness;
+    using WPFImageSource = System.Windows.Media.ImageSource;
+
     public static class Extensions
     {
         public static void SetPage(this System.Windows.Window window, Xamarin.Forms.Page page)
@@ -40,7 +41,7 @@ namespace Xamarin.Forms.Platform.WPF
 
         public static System.Windows.Controls.Orientation ToWPFOrientation(this StackOrientation orientation)
         {
-            switch(orientation)
+            switch (orientation)
             {
                 case StackOrientation.Horizontal: return System.Windows.Controls.Orientation.Horizontal;
                 case StackOrientation.Vertical: return System.Windows.Controls.Orientation.Vertical;
@@ -83,9 +84,9 @@ namespace Xamarin.Forms.Platform.WPF
 
         public static double GetWPFSize(this Font font)
         {
-            if(font.NamedSize != null)
+            if (font.NamedSize != null)
             {
-                switch(font.NamedSize.Value)
+                switch (font.NamedSize.Value)
                 {
                     case NamedSize.Micro:
                         return 10;

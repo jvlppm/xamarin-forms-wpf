@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Forms.cs" />
+    <Compile Include="Platform.WPF\IsolatedStorage.cs" />
     <Compile Include="Platform.WPF\Rendereres\EntryRenderer.xaml.cs">
       <DependentUpon>EntryRenderer.xaml</DependentUpon>
     </Compile>
@@ -86,6 +87,7 @@
     <Compile Include="Platform.WPF\PlatformServices.cs" />
     <Compile Include="Platform.WPF\Rendereres\ButtonRenderer.cs" />
     <Compile Include="Platform.WPF\Rendereres\ActivityIndicatorRenderer.cs" />
+    <Compile Include="Platform.WPF\Rendereres\ImageRenderer.cs" />
     <Compile Include="Platform.WPF\Rendereres\PageRenderer.cs" />
     <Compile Include="Platform.WPF\Rendereres\StackDictionary.cs" />
     <Compile Include="Platform.WPF\Rendereres\StackLayoutRenderer.cs" />

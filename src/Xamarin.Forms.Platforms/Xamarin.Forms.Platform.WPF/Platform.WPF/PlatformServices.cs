@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.IO.IsolatedStorage;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading;
@@ -10,6 +11,8 @@ namespace Xamarin.Forms.Platform.WPF
 {
     class PlatformServices : IPlatformServices
     {
+        HttpClient HttpClient = new HttpClient();
+
         Thread _uiThread;
 
         public bool IsInvokeRequired
@@ -63,14 +66,18 @@ namespace Xamarin.Forms.Platform.WPF
 
         public async Task<Stream> GetStreamAsync(Uri uri, CancellationToken cancellationToken)
         {
-            using (HttpClient httpClient = new HttpClient())
-            using (HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(uri, cancellationToken))
-                return await httpResponseMessage.Content.ReadAsStreamAsync();
+            if (uri.IsFile)
+                return await Task.Factory.StartNew(() => File.OpenRead(uri.AbsolutePath), cancellationToken);
+
+            var response = await HttpClient.GetAsync(uri, cancellationToken);
+            return await response.Content.ReadAsStreamAsync();
         }
 
         public IIsolatedStorageFile GetUserStoreForApplication()
         {
-            throw new NotImplementedException();
+            var scope = IsolatedStorageScope.User | IsolatedStorageScope.Assembly | IsolatedStorageScope.Domain;
+            var isolatedStorage = System.IO.IsolatedStorage.IsolatedStorageFile.GetStore(scope, null, null);
+            return new IsolatedStorageFile(isolatedStorage);
         }
 
         public void OpenUriAction(Uri uri)
