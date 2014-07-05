@@ -11,7 +11,7 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
 {
     public class VisualElementRenderer : VisualElementRenderer<VisualElement, System.Windows.FrameworkElement> { }
 
-    public class VisualElementRenderer<TModel, T> : UserControl, IWPFRenderer
+    public class VisualElementRenderer<TModel, TView> : UserControl, IWPFRenderer
         where TModel : VisualElement
     {
         StackDictionary<BindableProperty, Func<BindableProperty, bool>> Handlers = new StackDictionary<BindableProperty, Func<BindableProperty, bool>>();
@@ -31,11 +31,11 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
 
         // Using a DependencyProperty as the backing store for Model.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ModelProperty =
-            DependencyProperty.Register("Model", typeof(TModel), typeof(VisualElementRenderer<TModel, T>), new PropertyMetadata(null, Model_ChangedCallback));
+            DependencyProperty.Register("Model", typeof(TModel), typeof(VisualElementRenderer<TModel, TView>), new PropertyMetadata(null, Model_ChangedCallback));
 
         static void Model_ChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var rend = d as VisualElementRenderer<TModel, T>;
+            var rend = d as VisualElementRenderer<TModel, TView>;
 
             var oldModel = e.OldValue as TModel;
             if(oldModel != null)
@@ -47,9 +47,9 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
         }
 
         public System.Windows.FrameworkElement Element { get { return this; } }
-        public new T Content
+        public new TView Content
         {
-            get { return (T)base.Content; }
+            get { return (TView)base.Content; }
             set { base.Content = value; }
         }
 
@@ -77,8 +77,8 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
         #region Property Handlers
         protected void HandleProperty(BindableProperty property, Func<BindableProperty, bool> handler)
         {
-            if (!property.DeclaringType.IsAssignableFrom(typeof(TModel)))
-                throw new ArgumentException("Specified property is not contained in " + typeof(T).Name);
+            if (!IsSubclassOf(property.DeclaringType, typeof(TModel)))
+                throw new ArgumentException("Specified property is not contained in " + typeof(TView).Name);
 
             HandledProperties[property.PropertyName] = property;
             Handlers.Add(property, handler);
@@ -120,6 +120,22 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
         {
             Opacity = Model.Opacity;
             return true;
+        }
+        #endregion
+
+        #region Private
+        static bool IsSubclassOf(Type generic, Type toCheck)
+        {
+            while (toCheck != null && toCheck != typeof(object))
+            {
+                var cur = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
+                if (generic == cur)
+                {
+                    return true;
+                }
+                toCheck = toCheck.BaseType;
+            }
+            return false;
         }
         #endregion
     }

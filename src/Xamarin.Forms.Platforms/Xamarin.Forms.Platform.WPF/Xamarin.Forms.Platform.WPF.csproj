@@ -69,7 +69,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Forms.cs" />
+    <Compile Include="Platform.WPF\Controls\FlipView.cs" />
+    <Compile Include="Platform.WPF\Controls\FlipViewPanel.cs" />
     <Compile Include="Platform.WPF\IsolatedStorage.cs" />
+    <Compile Include="Platform.WPF\Rendereres\CarouselPageRenderer.cs" />
     <Compile Include="Platform.WPF\Rendereres\EntryRenderer.xaml.cs">
       <DependentUpon>EntryRenderer.xaml</DependentUpon>
     </Compile>
@@ -131,6 +134,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Platform.WPF\Controls\CommonResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Platform.WPF\Controls\FlipView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Platform.WPF\Rendereres\EntryRenderer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -138,6 +149,10 @@
     <Page Include="Platform.WPF\Controls\StackLayoutControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -8,18 +8,17 @@
              x:Name="root"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <conv:ModelToViewConverter x:Key="ModelToViewConverter"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="CommonResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
-    <ItemsControl x:Name="ItemsControl" ItemsSource="{Binding ItemsSource, ElementName=root}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+    <ItemsControl x:Name="ItemsControl" ItemsSource="{Binding ItemsSource, ElementName=root}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ItemTemplate="{StaticResource ModelTemplate}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <Grid Loaded="Grid_Loaded" />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
-        <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <UserControl Content="{Binding Converter={StaticResource ModelToViewConverter}}" />
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
     </ItemsControl>
 </UserControl>

@@ -6,9 +6,12 @@ namespace Xamarin.Forms.Platform.WPF.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var ren = RendererFactory.Create((Element)value);
-            if(ren != null)
-                return ren.Element;
+            if (value is Element)
+            {
+                var ren = RendererFactory.Create((Element)value);
+                if (ren != null)
+                    return ren.Element;
+            }
             return value;
         }
 

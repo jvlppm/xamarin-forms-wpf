@@ -1,16 +1,18 @@
-﻿using Xamarin.Forms;
-using Xamarin.Forms.Platform.WPF;
-using Xamarin.Forms.Platform.WPF.Rendereres;
-
-[assembly: ExportRenderer(typeof(Page), typeof(PageRenderer<Page>))]
+﻿[assembly: Xamarin.Forms.Platform.WPF.ExportRenderer(typeof(Xamarin.Forms.Page), typeof(Xamarin.Forms.Platform.WPF.Rendereres.PageRenderer))]
 namespace Xamarin.Forms.Platform.WPF.Rendereres
 {
-    public class PageRenderer<TModel> : VisualElementRenderer<TModel, System.Windows.Controls.UserControl>
+    using Xamarin.Forms;
+    using Xamarin.Forms.Platform.WPF;
+    using Xamarin.Forms.Platform.WPF.Rendereres;
+
+    public class PageRenderer : PageRenderer<Page, System.Windows.Controls.Control> { }
+
+    public class PageRenderer<TModel, TView> : VisualElementRenderer<TModel, TView>
         where TModel : Page
+        where TView : System.Windows.Controls.Control
     {
         public PageRenderer()
         {
-            Content = new System.Windows.Controls.UserControl();
             HandleProperty(Page.PaddingProperty, Handle_PaddingProperty);
         }
 

@@ -1,12 +1,12 @@
-﻿using System.Windows.Controls;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.WPF;
-using Xamarin.Forms.Platform.WPF.Rendereres;
-
-[assembly: ExportRenderer(typeof(ContentPage), typeof(ContentPageRenderer))]
+﻿[assembly: Xamarin.Forms.Platform.WPF.ExportRenderer(typeof(Xamarin.Forms.ContentPage), typeof(Xamarin.Forms.Platform.WPF.Rendereres.ContentPageRenderer))]
 namespace Xamarin.Forms.Platform.WPF.Rendereres
 {
-    public class ContentPageRenderer : PageRenderer<ContentPage>
+    using System.Windows.Controls;
+    using Xamarin.Forms;
+    using Xamarin.Forms.Platform.WPF;
+    using Xamarin.Forms.Platform.WPF.Rendereres;
+
+    public class ContentPageRenderer : PageRenderer<ContentPage, UserControl>
     {
         public ContentPageRenderer()
         {
