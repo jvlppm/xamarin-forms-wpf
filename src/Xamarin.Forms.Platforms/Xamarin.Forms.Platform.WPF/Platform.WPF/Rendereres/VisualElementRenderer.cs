@@ -14,9 +14,31 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
     public class VisualElementRenderer<TModel, TView> : UserControl, IWPFRenderer
         where TModel : VisualElement
     {
-        StackDictionary<BindableProperty, Func<BindableProperty, bool>> Handlers = new StackDictionary<BindableProperty, Func<BindableProperty, bool>>();
-        IDictionary<string, BindableProperty> HandledProperties = new Dictionary<string, BindableProperty>();
+        #region Static
+        // Using a DependencyProperty as the backing store for Model.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ModelProperty =
+            DependencyProperty.Register("Model", typeof(TModel), typeof(VisualElementRenderer<TModel, TView>), new PropertyMetadata(null, Model_ChangedCallback));
 
+        static void Model_ChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var rend = d as VisualElementRenderer<TModel, TView>;
+
+            var oldModel = e.OldValue as TModel;
+            if (oldModel != null)
+                rend.UnloadModel(oldModel);
+
+            var newModel = e.NewValue as TModel;
+            if (newModel != null)
+                rend.LoadModel(newModel);
+        }
+        #endregion
+
+        #region Attributes
+        StackDictionary<BindableProperty, Func<BindableProperty, bool>> Handlers;
+        MultiDictionary<string, BindableProperty> HandledProperties;
+        #endregion
+
+        #region Properties
         Element IWPFRenderer.Model
         {
             set { Model = (TModel)value; }
@@ -29,39 +51,29 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
             set { SetValue(ModelProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Model.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ModelProperty =
-            DependencyProperty.Register("Model", typeof(TModel), typeof(VisualElementRenderer<TModel, TView>), new PropertyMetadata(null, Model_ChangedCallback));
-
-        static void Model_ChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var rend = d as VisualElementRenderer<TModel, TView>;
-
-            var oldModel = e.OldValue as TModel;
-            if(oldModel != null)
-                rend.UnloadModel(oldModel);
-
-            var newModel = e.NewValue as TModel;
-            if (newModel != null)
-                rend.LoadModel(newModel);
-        }
-
         public System.Windows.FrameworkElement Element { get { return this; } }
         public new TView Content
         {
             get { return (TView)base.Content; }
             set { base.Content = value; }
         }
+        #endregion
 
+        #region Constructors
         public VisualElementRenderer()
         {
+            Handlers = new StackDictionary<BindableProperty, Func<BindableProperty, bool>>();
+            HandledProperties = new MultiDictionary<string, BindableProperty>();
+
             HandleProperty(VisualElement.BackgroundColorProperty, Handle_BackgroundColorProperty);
             HandleProperty(VisualElement.IsEnabledProperty, Handle_IsEnabledProperty);
             HandleProperty(VisualElement.IsVisibleProperty, Handle_IsVisibleProperty);
             HandleProperty(VisualElement.InputTransparentProperty, Handle_InputTransparentProperty);
             HandleProperty(VisualElement.OpacityProperty, Handle_OpacityProperty);
         }
+        #endregion
 
+        #region Methods
         protected virtual void LoadModel(TModel model)
         {
             model.PropertyChanged += OnPropertyChanged;
@@ -74,20 +86,17 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
             model.PropertyChanged -= OnPropertyChanged;
         }
 
-        #region Property Handlers
         protected void HandleProperty(BindableProperty property, Func<BindableProperty, bool> handler)
         {
-            if (!IsSubclassOf(property.DeclaringType, typeof(TModel)))
-                throw new ArgumentException("Specified property is not contained in " + typeof(TView).Name);
-
-            HandledProperties[property.PropertyName] = property;
+            HandledProperties.Add(property.PropertyName, property);
             Handlers.Add(property, handler);
         }
 
         protected virtual void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            BindableProperty property;
-            if (HandledProperties.TryGetValue(e.PropertyName, out property))
+            // Xamarin.Forms: Unfortunately we don't know which
+            // property did change, if they have the same name.
+            foreach (var property in HandledProperties[e.PropertyName])
                 Handlers[property].FirstOrDefault(handle => handle(property));
         }
 
@@ -120,22 +129,6 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
         {
             Opacity = Model.Opacity;
             return true;
-        }
-        #endregion
-
-        #region Private
-        static bool IsSubclassOf(Type generic, Type toCheck)
-        {
-            while (toCheck != null && toCheck != typeof(object))
-            {
-                var cur = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
-                if (generic == cur)
-                {
-                    return true;
-                }
-                toCheck = toCheck.BaseType;
-            }
-            return false;
         }
         #endregion
     }
