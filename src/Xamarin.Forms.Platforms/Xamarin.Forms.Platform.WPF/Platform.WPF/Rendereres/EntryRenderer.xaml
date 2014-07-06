@@ -10,7 +10,7 @@
              DataContext="{Binding Model, RelativeSource={RelativeSource Self}}">
     <rend:ViewRenderer.Resources>
         <conv:VisibilityNegationConverter x:Key="VisibilityNegationConverter" />
-        <conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <conv:ColorToWPFBrushConverter x:Key="ColorToWPFBrushConverter" />
     </rend:ViewRenderer.Resources>
     <Grid>

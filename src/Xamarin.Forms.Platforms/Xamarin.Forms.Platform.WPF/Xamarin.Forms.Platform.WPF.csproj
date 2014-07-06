@@ -83,7 +83,6 @@
     <Compile Include="Platform.WPF\Controls\StackLayoutControl.xaml.cs">
       <DependentUpon>StackLayoutControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Platform.WPF\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Platform.WPF\Converters\ColorToWPFBrushConverter.cs" />
     <Compile Include="Platform.WPF\Converters\LayoutOptionsToLengthConverter.cs" />
     <Compile Include="Platform.WPF\Converters\ModelToViewConverter.cs" />
