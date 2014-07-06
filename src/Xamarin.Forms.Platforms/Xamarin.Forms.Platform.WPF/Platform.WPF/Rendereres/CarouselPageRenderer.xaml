@@ -4,21 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:cont="clr-namespace:Xamarin.Forms.Platform.WPF.Controls"
+             xmlns:conv="clr-namespace:Xamarin.Forms.Platform.WPF.Converters"
              xmlns:rend="clr-namespace:Xamarin.Forms.Platform.WPF.Rendereres"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             x:Name="pageRoot"
+             d:DesignHeight="300" d:DesignWidth="300"
+             DataContext="{Binding Model, RelativeSource={RelativeSource Self}}">
     <rend:PageRenderer.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../CommonResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <conv:ItemTemplateConverter x:Key="ItemTemplateConverter"/>
     </rend:PageRenderer.Resources>
-    <cont:FlipView x:Name="FlipView">
-        <cont:FlipView.Style>
-            <Style TargetType="cont:FlipView">
-                <Setter Property="ItemTemplate" Value="{StaticResource ModelTemplate}"/>
-            </Style>
-        </cont:FlipView.Style>
-    </cont:FlipView>
+    <cont:FlipView x:Name="FlipView"
+                   SelectedIndex="0"
+                   SelectedItem="{Binding SelectedItem}"
+                   ItemsSource="{Binding Children}"
+                   ItemTemplate="{Binding ItemTemplate, Converter={StaticResource ItemTemplateConverter}}" />
 </rend:PageRenderer>

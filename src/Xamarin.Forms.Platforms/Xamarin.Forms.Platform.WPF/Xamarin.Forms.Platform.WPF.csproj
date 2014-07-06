@@ -71,10 +71,12 @@
     <Compile Include="Forms.cs" />
     <Compile Include="Platform.WPF\Controls\FlipView.cs" />
     <Compile Include="Platform.WPF\Controls\FlipViewPanel.cs" />
+    <Compile Include="Platform.WPF\Converters\CellToViewConverter.cs" />
     <Compile Include="Platform.WPF\IsolatedStorage.cs" />
     <Compile Include="Platform.WPF\Rendereres\CarouselPageRenderer.xaml.cs">
       <DependentUpon>CarouselPageRenderer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Platform.WPF\Converters\ItemTemplateConverter.cs" />
     <Compile Include="Platform.WPF\Rendereres\EntryRenderer.xaml.cs">
       <DependentUpon>EntryRenderer.xaml</DependentUpon>
     </Compile>
@@ -97,6 +99,7 @@
     <Compile Include="Platform.WPF\Rendereres\StackDictionary.cs" />
     <Compile Include="Platform.WPF\Rendereres\StackLayoutRenderer.cs" />
     <Compile Include="Platform.WPF\Rendereres\ViewRenderer.cs" />
+    <Compile Include="Platform.WPF\Rendereres\ElementRenderer.cs" />
     <Compile Include="Platform.WPF\Rendereres\VisualElementRenderer.cs" />
     <Compile Include="Platform.WPF\Rendereres\ContentPageRenderer.cs" />
     <Compile Include="Platform.WPF\Rendereres\LabelRenderer.cs" />

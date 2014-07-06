@@ -1,70 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.WPF;
-
-[assembly: ExportRenderer(typeof(VisualElement), typeof(Xamarin.Forms.Platform.WPF.Rendereres.VisualElementRenderer))]
+﻿[assembly: Xamarin.Forms.Platform.WPF.ExportRenderer(typeof(Xamarin.Forms.VisualElement), typeof(Xamarin.Forms.Platform.WPF.Rendereres.VisualElementRenderer))]
 namespace Xamarin.Forms.Platform.WPF.Rendereres
 {
+    using Xamarin.Forms;
+    using Xamarin.Forms.Platform.WPF;
+
     public class VisualElementRenderer : VisualElementRenderer<VisualElement, System.Windows.FrameworkElement> { }
 
-    public class VisualElementRenderer<TModel, TView> : UserControl, IWPFRenderer
+    public class VisualElementRenderer<TModel, TView> : ElementRenderer<TModel, TView>
         where TModel : VisualElement
     {
-        #region Static
-        // Using a DependencyProperty as the backing store for Model.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ModelProperty =
-            DependencyProperty.Register("Model", typeof(TModel), typeof(VisualElementRenderer<TModel, TView>), new PropertyMetadata(null, Model_ChangedCallback));
-
-        static void Model_ChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var rend = d as VisualElementRenderer<TModel, TView>;
-
-            var oldModel = e.OldValue as TModel;
-            if (oldModel != null)
-                rend.UnloadModel(oldModel);
-
-            var newModel = e.NewValue as TModel;
-            if (newModel != null)
-                rend.LoadModel(newModel);
-        }
-        #endregion
-
-        #region Attributes
-        StackDictionary<BindableProperty, Func<BindableProperty, bool>> Handlers;
-        MultiDictionary<string, BindableProperty> HandledProperties;
-        #endregion
-
-        #region Properties
-        Element IWPFRenderer.Model
-        {
-            set { Model = (TModel)value; }
-            get { return Model; }
-        }
-
-        public TModel Model
-        {
-            get { return (TModel)GetValue(ModelProperty); }
-            set { SetValue(ModelProperty, value); }
-        }
-
-        public System.Windows.FrameworkElement Element { get { return this; } }
-        public new TView Content
-        {
-            get { return (TView)base.Content; }
-            set { base.Content = value; }
-        }
-        #endregion
-
         #region Constructors
         public VisualElementRenderer()
         {
-            Handlers = new StackDictionary<BindableProperty, Func<BindableProperty, bool>>();
-            HandledProperties = new MultiDictionary<string, BindableProperty>();
-
             HandleProperty(VisualElement.BackgroundColorProperty, Handle_BackgroundColorProperty);
             HandleProperty(VisualElement.IsEnabledProperty, Handle_IsEnabledProperty);
             HandleProperty(VisualElement.IsVisibleProperty, Handle_IsVisibleProperty);
@@ -73,33 +20,7 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
         }
         #endregion
 
-        #region Methods
-        protected virtual void LoadModel(TModel model)
-        {
-            model.PropertyChanged += OnPropertyChanged;
-            foreach (var handler in Handlers)
-                handler.Value(handler.Key);
-        }
-
-        protected virtual void UnloadModel(TModel model)
-        {
-            model.PropertyChanged -= OnPropertyChanged;
-        }
-
-        protected void HandleProperty(BindableProperty property, Func<BindableProperty, bool> handler)
-        {
-            HandledProperties.Add(property.PropertyName, property);
-            Handlers.Add(property, handler);
-        }
-
-        protected virtual void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            // Xamarin.Forms: Unfortunately we don't know which
-            // property did change, if they have the same name.
-            foreach (var property in HandledProperties[e.PropertyName])
-                Handlers[property].FirstOrDefault(handle => handle(property));
-        }
-
+        #region Property Handlers
         protected virtual bool Handle_BackgroundColorProperty(BindableProperty property)
         {
             Background = Model.BackgroundColor.ToWPFBrush();

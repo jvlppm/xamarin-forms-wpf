@@ -1,10 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using Xamarin.Forms.Platform.WPF.Rendereres;
-
-namespace Xamarin.Forms.Platform.WPF
+﻿namespace Xamarin.Forms.Platform.WPF
 {
+    using System;
+
     public static class RendererFactory
     {
         internal static IWPFRenderer Create(Element element)
@@ -16,9 +13,8 @@ namespace Xamarin.Forms.Platform.WPF
                 throw new NotImplementedException();
 
             var renderer = Registrar.Registered.GetHandler<IWPFRenderer>(element.GetType());
-            if (renderer == null)
-                throw new NotImplementedException();
-            renderer.Model = element;
+            if (renderer != null)
+                renderer.Model = element;
             return renderer;
         }
 
