@@ -84,21 +84,19 @@
 
         public static double GetWPFSize(this Font font)
         {
-            if (font.NamedSize != null)
+            switch (font.NamedSize)
             {
-                switch (font.NamedSize.Value)
-                {
-                    case NamedSize.Micro:
-                        return 10;
-                    case NamedSize.Small:
-                        return 12;
-                    case NamedSize.Medium:
-                        return 14;
-                    case NamedSize.Large:
-                        return 18;
-                }
+                case NamedSize.Micro:
+                    return 10;
+                case NamedSize.Small:
+                    return 12;
+                case NamedSize.Medium:
+                    return 14;
+                case NamedSize.Large:
+                    return 18;
+                default:
+                    return font.FontSize;
             }
-            return font.FontSize;
         }
     }
 }

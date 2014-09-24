@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace FormsGallery
 {
@@ -13,7 +12,7 @@ namespace FormsGallery
             Label header = new Label
             {
                 Text = "StackLayout",
-                Font = Font.BoldSystemFontOfSize(50),
+                Font = Font.SystemFontOfSize(50, FontAttributes.Bold),
                 HorizontalOptions = LayoutOptions.Center
             };
 

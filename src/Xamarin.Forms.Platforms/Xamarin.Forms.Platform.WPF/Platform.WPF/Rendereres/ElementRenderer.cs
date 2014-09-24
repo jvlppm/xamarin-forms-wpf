@@ -34,8 +34,8 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
         #endregion
 
         #region Attributes
-        StackDictionary<BindableProperty, Func<BindableProperty, bool>> Handlers;
-        MultiDictionary<string, BindableProperty> HandledProperties;
+        MultiValueDictionary<BindableProperty, Func<BindableProperty, bool>> Handlers;
+        MultiValueDictionary<string, BindableProperty> HandledProperties;
         #endregion
 
         #region Properties
@@ -62,8 +62,8 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
         #region Constructors
         public ElementRenderer()
         {
-            Handlers = new StackDictionary<BindableProperty, Func<BindableProperty, bool>>();
-            HandledProperties = new MultiDictionary<string, BindableProperty>();
+            Handlers = new MultiValueDictionary<BindableProperty, Func<BindableProperty, bool>>();
+            HandledProperties = new MultiValueDictionary<string, BindableProperty>();
         }
         #endregion
 
@@ -71,8 +71,13 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
         protected virtual void LoadModel(TModel model)
         {
             model.PropertyChanged += OnPropertyChanged;
-            foreach (var handler in Handlers)
-                handler.Value(handler.Key);
+            foreach (var handlers in this.Handlers)
+            {
+                foreach (var handler in handlers.Value)
+                {
+                    handler(handlers.Key);
+                }
+            }
         }
 
         protected virtual void UnloadModel(TModel model)
@@ -90,8 +95,16 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
         {
             // Xamarin.Forms: Unfortunately we don't know which
             // property did change, if they have the same name.
-            foreach (var property in HandledProperties[e.PropertyName])
+            IReadOnlyCollection<BindableProperty> properties;
+            if (!HandledProperties.TryGetValue(e.PropertyName, out properties))
+            {
+                return;
+            }
+
+            foreach (var property in properties)
+            {
                 Handlers[property].FirstOrDefault(handle => handle(property));
+            }
         }
         #endregion
     }

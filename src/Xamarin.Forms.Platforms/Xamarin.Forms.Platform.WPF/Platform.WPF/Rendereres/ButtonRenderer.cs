@@ -73,17 +73,10 @@ namespace Xamarin.Forms.Platform.WPF.Rendereres
 
         private bool Handle_FontProperty(BindableProperty property)
         {
-            if(Model.Font == null)
-            {
-                Content.FontFamily = DefaultFontFamily;
-                Content.FontSize = DefaultFontSize;
-                Content.FontWeight = System.Windows.FontWeights.Normal;
-                return true;
-            }
-
-            Content.FontFamily = Model.Font.FontName == null ? DefaultFontFamily : new System.Windows.Media.FontFamily(Model.Font.FontName);
-            Content.FontSize = Model.Font.GetWPFSize();
-            Content.FontWeight = Model.Font.Bold ? System.Windows.FontWeights.Bold : System.Windows.FontWeights.Normal;
+            Content.FontFamily = Model.Font.FontFamily == null ? DefaultFontFamily : new System.Windows.Media.FontFamily(Model.Font.FontFamily);
+            var fontSize = Model.Font.GetWPFSize();
+            Content.FontSize = fontSize > 0 ? fontSize : DefaultFontSize;
+            Content.FontWeight = Model.Font.FontAttributes == FontAttributes.Bold ? System.Windows.FontWeights.Bold : System.Windows.FontWeights.Normal;
             return true;
         }
     }
