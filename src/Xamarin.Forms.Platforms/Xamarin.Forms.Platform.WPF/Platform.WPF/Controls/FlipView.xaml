@@ -97,14 +97,14 @@
                                   Visibility="Collapsed">
                                 <RepeatButton x:Name="PART_NextButton"
                                               FontFamily="Segoe UI Symbol"
-                                              Content=""
+                                              Content="▶"
                                               FontSize="18"
                                               Style="{StaticResource NavigationButtonStyle}"
                                               Command="{x:Static local:FlipView.NextCommand}"
                                               HorizontalAlignment="Right" />
                                 <RepeatButton x:Name="PART_PreviousButton"
                                               FontFamily="Segoe UI Symbol"
-                                              Content=""
+                                              Content="◀"
                                               FontSize="18"
                                               Style="{StaticResource NavigationButtonStyle}"
                                               Command="{x:Static local:FlipView.PreviousCommand}"
